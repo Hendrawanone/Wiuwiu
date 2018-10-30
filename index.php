@@ -1,13 +1,20 @@
 <?php
 
+session_start();
+
+if( isset($_SESSION["login"]) ) {
+    header("Location: admin/");
+    exit;
+}
+
 require 'functions.php';
 
 if( isset($_POST["kirim"]) ) {
 
   if( insert($_POST) > 0 ) {
-    echo "<script>alert('Berhasil')</script>";
+    $success = true;
   } else {
-    echo "<script>alert('gagal')</script>";
+    $failed = false;
   }
 
 }
@@ -124,6 +131,21 @@ if( isset($_POST["kirim"]) ) {
         <div class="box mt-5">
           <div class="row mt-5">
             <div class="col-lg-6">
+                <?php if(isset($success)) : ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>Pesanan anda berhasil tekirim</strong> Tunggu informasi selanjutnya dari kami!
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <?php elseif(isset($failed)) : ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Pesanan anda tidak tekirim</strong> Silahkan coba lagi!
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <?php endif; ?>
               <h4 class="ml-3"  >Pemesanan Wiu-wiu gratis</h4>
                 <form method="POST" action="" class="mt-3">
                   <div class="form-group">
