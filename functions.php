@@ -13,7 +13,7 @@ function insert($data) {
     $date = htmlspecialchars($data["date"]);
     $alamat = htmlspecialchars($data["alamat"]);
 
-    $query = "INSERT INTO pesanan VALUES('', '$nama', '$hp', '$keperluan', '$date', '$alamat')";
+    $query = "INSERT INTO pesanan VALUES('', '$nama', '$hp', '$keperluan', '$date', '$alamat', 'Baru')";
 
     mysqli_query($conn, $query);
 
