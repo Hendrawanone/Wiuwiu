@@ -180,6 +180,8 @@ $user = query("SELECT * FROM user");
                                     	<th>Keperluan</th>
                                     	<th>Waktu</th>
                                         <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </thead>
                                     <?php foreach( $pesanan as $row ) : ?>
                                     <tbody>
@@ -190,6 +192,11 @@ $user = query("SELECT * FROM user");
                                             <td><?= $row["keperluan"]; ?></td>
                                             <td><?= $row["waktu"]; ?></td>
                                             <td><?= $row["alamat"]; ?></td>
+                                            <td><?= $row["status"]; ?></td>
+                                            <td>
+                                                <a href="konfirmasi.php?id=<?= $row["id"]; ?>" class="btn btn-success">Konfirmasi</a> | 
+                                                <a href="tolak.php?id=<?= $row["id"]; ?>" class="btn btn-danger">Ditolak</a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                     <?php endforeach; ?>
