@@ -21,10 +21,17 @@ if( isset($_POST["login"]) ) {
 		$row = mysqli_fetch_assoc($result);
 
 		if( password_verify($password, $row["password"]) ) {
-			$_SESSION["login"] = true;
-			$_SESSION["username"] = $row["username"];
-			header("Location: ../admin/");
-			exit;
+			if( $row["status"] === admin ) {
+		        $_SESSION["admin"] = true;
+		        $_SESSION["username"] = $row["username"];
+		        header("Location: ../admin/index.php");
+		        exit;
+		    } else if( $row["status"] === user ) {
+		        $_SESSION["user"] = true;
+		        $_SESSION["username"] = $row["username"];
+		        header("Location: ../karyawan/");
+		        exit;
+		    }
 		}
 
 	}

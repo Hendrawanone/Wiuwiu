@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 31 Okt 2018 pada 04.49
+-- Generation Time: 01 Nov 2018 pada 03.41
 -- Versi Server: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -88,6 +88,7 @@ CREATE TABLE `user` (
   `nama` varchar(80) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(200) NOT NULL,
+  `foto` varchar(30) NOT NULL,
   `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -95,8 +96,9 @@ CREATE TABLE `user` (
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`id`, `nama`, `username`, `password`, `status`) VALUES
-(1, 'Hendrawan', 'hendraone', '$2y$10$j8wqe7vbM4yFlyDtXcGrf.ucv95VMT/BVHuxiGKbmKQdt4gYt0pFm', 'admin');
+INSERT INTO `user` (`id`, `nama`, `username`, `password`, `foto`, `status`) VALUES
+(1, 'Hendrawan', 'hendraone', '$2y$10$j8wqe7vbM4yFlyDtXcGrf.ucv95VMT/BVHuxiGKbmKQdt4gYt0pFm', '', 'admin'),
+(3, 'Hendrawan', 'hendra', '$2y$10$TaxzIQ0dyC4Qgu/XbE8p6uxHG8RFLhn/SoO1IHK7FmWVSN4sKSFZm', '5bda6329efbdd.jpg', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -152,7 +154,7 @@ ALTER TABLE `pesanan`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

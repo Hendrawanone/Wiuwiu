@@ -5,13 +5,12 @@ require '../functions.php';
 if( isset($_POST['register']) ) {
 
 	if( register($_POST) > 0 ) {
-		echo "<script>alert('Data berhasil ditambahkan');</script>";
+		echo "<script>alert('Data berhasil ditambahkan'); document.location.href='index.php';</script>";
 	} else {
 		echo mysqli_error($conn);
 	}
 
 }
-
 
 ?>
 <!DOCTYPE html>
@@ -34,7 +33,7 @@ if( isset($_POST['register']) ) {
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Register</h4>
-							<form method="POST" action="">
+							<form method="POST" action="" enctype="multipart/form-data">
 							 
 								<div class="form-group">
 									<label for="name">Nama</label>
@@ -44,6 +43,11 @@ if( isset($_POST['register']) ) {
 								<div class="form-group">
 									<label for="email">Username</label>
 									<input id="email" type="text" class="form-control" name="username" required>
+								</div>
+
+								<div class="form-group">
+									<label for="foto">Foto</label>
+									<input type="file" id="foto" class="form-control" name="foto" required>
 								</div>
 
 								<div class="form-group">
