@@ -19,7 +19,7 @@ $admin = query("SELECT * FROM user WHERE username = '$username'")[0];
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>Wiu-Wiu | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -59,11 +59,11 @@ $admin = query("SELECT * FROM user WHERE username = '$username'")[0];
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>WIUWIU</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -280,11 +280,11 @@ $admin = query("SELECT * FROM user WHERE username = '$username'")[0];
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="../login/upload/<?= $admin["foto"]; ?>" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  <?= $admin["nama"]; ?>
+                  <small><?= $admin["username"]; ?></small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -328,10 +328,10 @@ $admin = query("SELECT * FROM user WHERE username = '$username'")[0];
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="../login/upload/<?= $admin["foto"]; ?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p><?= $admin["nama"]; ?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -355,17 +355,17 @@ $admin = query("SELECT * FROM user WHERE username = '$username'")[0];
           </a>
         </li>
         <li>
-          <a href="pages/forms/general.html">
+          <a href="pages/forms/general.php">
             <i class="fa fa-edit"></i> <span>Forms</span>
           </a>
         </li>
         <li>
-          <a href="pages/tables/data.html">
+          <a href="pages/tables/data.php">
             <i class="fa fa-table"></i> <span>Tables</span>
           </a>
         </li>
         <li>
-          <a href="pages/calendar.html">
+          <a href="pages/calendar.php">
             <i class="fa fa-calendar"></i> <span>Calendar</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-red">3</small>
@@ -374,7 +374,7 @@ $admin = query("SELECT * FROM user WHERE username = '$username'")[0];
           </a>
         </li>
         <li>
-          <a href="pages/mailbox/mailbox.html">
+          <a href="pages/mailbox/mailbox.php">
             <i class="fa fa-envelope"></i> <span>Mailbox</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-yellow">12</small>
