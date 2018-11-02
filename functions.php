@@ -58,6 +58,43 @@ function tambah_armada($data) {
 
 }
 
+function tugas($data) {
+
+    global $conn;
+
+    $id = $data["id"];
+    $driver = $data["driver"];
+    $armada = $data["armada"];
+
+    $data_pesanan = query("SELECT * FROM pesanan WHERE id = $id")[0];
+    $data_driver = query("SELECT * FROM driver WHERE nama = '$driver'")[0];
+    $data_armada = query("SELECT * FROM armada WHERE nama = '$armada'")[0];
+
+    $ubah = "UPDATE pesanan SET status = 'Konfirasi' WHERE id = $id";
+
+	mysqli_query($conn, $ubah);
+
+    $nama_pemesan = $data_pesanan["nama"];
+    $telepon_pemesan = $data_pesanan["telepon"];
+    $keperluan_pemesan = $data_pesanan["keperluan"];
+    $tanggal_pemesan = $data_pesanan["waktu"];
+    $alamat_pemesan = $data_pesanan["alamat"];
+    $nama_driver = $data_driver["nama"];
+    $telepon_driver = $data_driver["telepon"];
+    $alamat_driver = $data_driver["alamat"];
+    $nama_armada = $data_armada["nama"];
+    $mobil_armada = $data_armada["mobil"];
+    $nopol_armada = $data_armada["nopol"];
+    $status = 'Tugas';
+
+    $query = "INSERT INTO tugas VALUES('', '$nama_pemesan', '$telepon_pemesan', '$keperluan_pemesan', '$tanggal_pemesan', '$alamat_pemesan', '$nama_driver', '$telepon_driver', '$alamat_driver', '$nama_armada', '$mobil_armada', '$nopol_armada', '$status')";
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+
+}
+
 
 function register($data) {
 	global $conn;

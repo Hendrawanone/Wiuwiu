@@ -29,6 +29,7 @@ if( isset($_POST["login"]) ) {
 		    } else if( $row["status"] === user ) {
 		        $_SESSION["user"] = true;
 		        $_SESSION["username"] = $row["username"];
+		        $_SESSION["nama"] = $row["nama"];
 		        header("Location: ../karyawan/");
 		        exit;
 		    }
