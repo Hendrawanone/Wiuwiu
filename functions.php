@@ -22,6 +22,43 @@ function insert($data) {
 }
 
 
+function tambah_driver($data) {
+
+    global $conn;
+
+    $nama = htmlspecialchars($data["nama"]);
+    $telepon = htmlspecialchars($data["telepon"]);
+    $nik = htmlspecialchars($data["nik"]);
+    $sim = htmlspecialchars($data["sim"]);
+    $foto = driver();
+    $alamat = htmlspecialchars($data["alamat"]);
+
+    $query = "INSERT INTO driver VALUES('', '$nama', '$telepon', '$nik', '$sim', '$foto', '$alamat')";
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+
+}
+
+
+function tambah_armada($data) {
+
+    global $conn;
+
+    $nama = htmlspecialchars($data["nama"]);
+    $nopol = htmlspecialchars($data["nopol"]);
+    $mobil = htmlspecialchars($data["mobil"]);
+
+    $query = "INSERT INTO armada VALUES('', '$nama', '$nopol', '$mobil')";
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+
+}
+
+
 function register($data) {
 	global $conn;
 
@@ -94,6 +131,45 @@ function upload() {
 	$namaFotoBaru .= $eksetensiFoto;
 
 	move_uploaded_file($tmpFoto, 'upload/' . $namaFotoBaru);
+
+	return htmlspecialchars($namaFotoBaru);
+
+}
+
+function driver() {
+	$namaFoto = $_FILES['foto']['name'];
+	$ukuranFoto = $_FILES['foto']['size'];
+	$error = $_FILES['foto']['error'];
+	$tmpFoto = $_FILES['foto']['tmp_name'];
+
+	if( $error === 4 ) {
+		echo "<script>alert('Pilih foto terlebih dahulu');</script>";
+		return false;
+	}
+
+	$eksetensiFotoValid = ['jpg', 'jpeg', 'png'];
+	$eksetensiFoto = explode('.', $namaFoto);
+	$eksetensiFoto = strtolower(end($eksetensiFoto));
+
+	if( !in_array($eksetensiFoto, $eksetensiFotoValid) ) {
+		echo "<script>
+				alert('Yang anda upload bukan foto');
+			  </script>";
+		return false;
+	}
+
+	if( $ukuranFoto > 1000000 ){
+		echo "<script>
+				alert('ukuran gambar terlalu besar!');
+			  </script>";
+		return false;
+	}
+
+	$namaFotoBaru = uniqid();
+	$namaFotoBaru .= '.';
+	$namaFotoBaru .= $eksetensiFoto;
+
+	move_uploaded_file($tmpFoto, 'foto/' . $namaFotoBaru);
 
 	return htmlspecialchars($namaFotoBaru);
 
