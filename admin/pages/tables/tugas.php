@@ -13,7 +13,21 @@ $username = $_SESSION["username"];
 
 $admin = query("SELECT * FROM user WHERE username = '$username'")[0];
 
-$pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
+if( isset($_POST["tugas"]) ) {
+
+  if( tugas($_POST) > 0 ) {
+    $success = true;
+  } else {
+    $failed = false;
+  }
+
+}
+
+$id = $_GET["id"];
+
+$pesanan = query("SELECT * FROM pesanan WHERE id = $id")[0];
+$driver = query("SELECT * FROM driver");
+$armada = query("SELECT * FROM armada");
 
 ?>
 <!DOCTYPE html>
@@ -21,7 +35,7 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Wiu-Wiu | Tabel</title>
+  <title>Wiu-wiu | Forms</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -30,8 +44,6 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
   <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../../bower_components/Ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -46,15 +58,14 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="../../index.html" class="logo">
+    <a href="../../index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
@@ -210,8 +221,7 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
                         <small class="pull-right">20%</small>
                       </h3>
                       <div class="progress xs">
-                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                           <span class="sr-only">20% Complete</span>
                         </div>
                       </div>
@@ -225,8 +235,7 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
                         <small class="pull-right">40%</small>
                       </h3>
                       <div class="progress xs">
-                        <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                           <span class="sr-only">40% Complete</span>
                         </div>
                       </div>
@@ -240,8 +249,7 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
                         <small class="pull-right">60%</small>
                       </h3>
                       <div class="progress xs">
-                        <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                           <span class="sr-only">60% Complete</span>
                         </div>
                       </div>
@@ -255,8 +263,7 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
                         <small class="pull-right">80%</small>
                       </h3>
                       <div class="progress xs">
-                        <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar"
-                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                           <span class="sr-only">80% Complete</span>
                         </div>
                       </div>
@@ -307,7 +314,7 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="../../logout.php" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="../logout.php" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -338,7 +345,7 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
-          <span class="input-group-btn">
+              <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
               </span>
@@ -353,12 +360,12 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>
-        <li>
-          <a href="../forms/general.php">
+        <li class="active treeview">
+          <a href="forms/general.php">
             <i class="fa fa-edit"></i> <span>Forms</span>
           </a>
         </li>
-        <li class="active">
+        <li>
           <a href="../tables/data.php">
             <i class="fa fa-table"></i> <span>Tables</span>
           </a>
@@ -412,63 +419,71 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Tabel
-        <small>advanced tables</small>
+        Form 
+        <small>Wiu-wiu</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
+        <li><a href="#">Forms</a></li>
+        <li class="active">Form tugas</li>
       </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
       <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Data tabel pemesanan wiu-wiu</h3>
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Pilih Driver dan Armada untuk bertugas kepada <?= $pesanan["nama"]; ?></h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nama</th>
-                  <th>Telepon</th>
-                  <th>Keperluan</th>
-                  <th>Waktu</th>
-                  <th>Alamat</th>
-                  <th>Status</th>
-                  <th>Aksi</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach( $pesan as $row ) : ?>
-                <tr>
-                  <td><?= $row["id"]; ?></td>
-                  <td><?= $row["nama"]; ?></td>
-                  <td><?= $row["telepon"]; ?></td>
-                  <td><?= $row["keperluan"]; ?></td>
-                  <td><?= $row["waktu"]; ?></td>
-                  <td><?= $row["alamat"]; ?></td>
-                  <td><?= $row["status"]; ?></td>
-                  <td>
-                    <a href="tugas.php?id=<?= $row["id"]; ?>" class="btn btn-success">Konfirmasi</a>
-                    <a href="tolak.php?id=<?= $row["id"]; ?>" class="btn btn-danger">Batal</a>
-                  </td>
-                </tr>
-                <?php endforeach; ?>
-                </tfoot>
-              </table>
-            </div>
-            <!-- /.box-body -->
+            <!-- form start -->
+            <form role="form" action="" method="post">
+              <div class="box-body">
+                <?php if(isset($success)) : ?>
+                  <div class="alert alert-success" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Data berhasil ditambahkan</strong>
+                    <a href="../tables/data.php" class="alert-link">Pratinjau</a>
+                  </div>
+                <?php elseif(isset($failed)) : ?>
+                  <div class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Data gagal ditambahkan</strong>
+                  </div>
+                <?php endif; ?>
+                <!-- input hidden -->
+                <input type="hidden" name="id" value="<?= $pesanan["id"]; ?>">
+                <!-- end input hidden -->
+                <div class="form-group">
+                  <label for="driver">Pilih Driver</label>
+                  <select id="driver" name="driver" class="form-control" required>
+                    <?php foreach( $driver as $row ) : ?>
+                    <option required value="<?= $row["nama"]; ?>"><?= $row["nama"]; ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="armada">Pilih Armada</label>
+                  <select id="armada" name="armada" class="form-control" required>
+                    <?php foreach( $armada as $row ) : ?>
+                    <option required value="<?= $row["nama"]; ?>"><?= $row["nama"]; ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary" name="tugas">Submit</button>
+              </div>
+            </form>
           </div>
-          <!-- /.box -->
         </div>
-        <!-- /.col -->
+        <!--/.col (left) -->
       </div>
       <!-- /.row -->
     </section>
@@ -683,30 +698,11 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="../../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="../../bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
-<!-- page script -->
-<script>
-  $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
-</script>
 </body>
 </html>

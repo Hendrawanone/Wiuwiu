@@ -2,16 +2,16 @@
 
 session_start();
 
-if( !isset($_SESSION["login"]) ) {
+if( !isset($_SESSION["user"]) ) {
     header("Location: index.php");
     exit;
 }
 
 require '../functions.php';
 
-$pesanan = query("SELECT * FROM pesanan");
-
 $user = query("SELECT * FROM user");
+$nama_driver = $_SESSION["nama"];
+$tugas = query("SELECT * FROM tugas WHERE nama_driver = '$nama_driver'");
 
 ?>
 <!doctype html>
@@ -175,27 +175,32 @@ $user = query("SELECT * FROM user");
                                 <table class="table table-hover table-striped">
                                     <thead>
                                         <th>ID</th>
-                                    	<th>Nama</th>
-                                    	<th>Telepon</th>
-                                    	<th>Keperluan</th>
-                                    	<th>Waktu</th>
-                                        <th>Alamat</th>
-                                        <th>Status</th>
+                                    	<th>Nama pemesan</th>
+                                    	<th>No telepon pemesan</th>
+                                    	<th>Keperluan pemesan</th>
+                                    	<th>Waktu pemesanan</th>
+                                        <th>Alamat pemesan</th>
+                                        <th>Nama Armada</th>
+                                        <th>Type Mobil</th>
+                                        <th>No Polisi</th>
+                                        <th>status</th>
                                         <th>Action</th>
                                     </thead>
-                                    <?php foreach( $pesanan as $row ) : ?>
+                                    <?php foreach( $tugas as $row ) : ?>
                                     <tbody>
                                         <tr>
-                                        	<td><?= $row["id"]; ?></td>
-                                        	<td><?= $row["nama"]; ?></td>
-                                            <td><?= $row["telepon"]; ?></td>
-                                            <td><?= $row["keperluan"]; ?></td>
-                                            <td><?= $row["waktu"]; ?></td>
-                                            <td><?= $row["alamat"]; ?></td>
-                                            <td><?= $row["status"]; ?></td>
+                                            <td><?= $row["id"]; ?></td>
+                                            <td><?= $row["nama_pemesan"]; ?></td>
+                                            <td><?= $row["telepon_pemesan"]; ?></td>
+                                            <td><?= $row["keperluan_pemesan"]; ?></td>
+                                            <td><?= $row["tanggal_pemesanan"]; ?></td>
+                                            <td><?= $row["alamat_pemesan"]; ?></td>
+                                            <td><?= $row["nama_armada"]; ?></td>
+                                            <td><?= $row["mobil_armada"]; ?></td>
+                                            <td><?= $row["nopol_armada"]; ?></td>
+                                        	<td><?= $row["status"]; ?></td>
                                             <td>
-                                                <a href="konfirmasi.php?id=<?= $row["id"]; ?>" class="btn btn-success">Konfirmasi</a> | 
-                                                <a href="tolak.php?id=<?= $row["id"]; ?>" class="btn btn-danger">Ditolak</a>
+                                                <a href="">Terlaksana</a> | <a href="">Dibatalkan</a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -205,39 +210,6 @@ $user = query("SELECT * FROM user");
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="col-md-12">
-                        <div class="card card-plain">
-                            <div class="header">
-                                <h4 class="title">Table user</h4>
-                                <p class="category">Data tabel user</p>
-                            </div>
-                            <div class="content table-responsive table-full-width">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <th>ID</th>
-                                    	<th>Nama</th>
-                                    	<th>Username</th>
-                                    	<th>Status</th>
-                                    </thead>
-                                    <?php foreach( $user as $row ) : ?>
-                                    <tbody>
-                                        <tr>
-                                        	<td><?= $row["id"]; ?></td>
-                                        	<td><?= $row["nama"]; ?></td>
-                                        	<td><?= $row["username"]; ?></td>
-                                        	<td><?= $row["status"]; ?></td>
-                                        </tr>
-                                    </tbody>
-                                    <?php endforeach; ?>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
             </div>
         </div>
