@@ -369,10 +369,18 @@ if( isset($_POST["armada"]) ) {
             <i class="fa fa-edit"></i> <span>Forms</span>
           </a>
         </li>
-        <li>
-          <a href="../tables/data.php">
+        <li class="treeview">
+          <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="../tables/data.php"><i class="fa fa-circle-o"></i>Pemesanan</a></li>
+            <li><a href="../tables/penugasan.php"><i class="fa fa-circle-o"></i>Penugasan</a></li>
+            <li><a href="../tables/terlaksana.php"><i class="fa fa-circle-o"></i>Terlaksanan</a></li>
+          </ul>
         </li>
         <li>
           <a href="../calendar.php">
