@@ -11,7 +11,7 @@ require '../functions.php';
 
 $id = $_GET["id"];
 
-$query = "UPDATE pesanan SET status = 'Ditolak' WHERE id = $id";
+$query = "UPDATE tugas SET status = 'Dibatalkan' WHERE id = $id";
 
 mysqli_query($conn, $query);
 

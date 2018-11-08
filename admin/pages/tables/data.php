@@ -358,10 +358,18 @@ $pesan = query("SELECT * FROM pesanan WHERE status = 'Baru'");
             <i class="fa fa-edit"></i> <span>Forms</span>
           </a>
         </li>
-        <li class="active">
-          <a href="../tables/data.php">
+        <li class="treeview active">
+          <a href="#">
             <i class="fa fa-table"></i> <span>Tables</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="data.php"><i class="fa fa-circle-o"></i>Pemesanan</a></li>
+            <li><a href="penugasan.php"><i class="fa fa-circle-o"></i>Penugasan</a></li>
+            <li><a href="terlaksana.php"><i class="fa fa-circle-o"></i>Terlaksanan</a></li>
+          </ul>
         </li>
         <li>
           <a href="../calendar.php">

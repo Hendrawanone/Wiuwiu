@@ -200,7 +200,7 @@ $tugas = query("SELECT * FROM tugas WHERE nama_driver = '$nama_driver'");
                                             <td><?= $row["nopol_armada"]; ?></td>
                                         	<td><?= $row["status"]; ?></td>
                                             <td>
-                                                <a href="">Terlaksana</a> | <a href="">Dibatalkan</a>
+                                                <a href="terlaksana.php?id=<?= $row["id"]; ?>">Terlaksana</a> | <a href="tolak.php?id=<?= $row["id"]; ?>">Dibatalkan</a>
                                             </td>
                                         </tr>
                                     </tbody>
